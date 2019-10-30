@@ -17,9 +17,9 @@ struct node* insert_front(struct node* head, char* name, char* artist){
 int get_size(struct node* head){
   int size = 0;
   struct node* currentNode = head;
-  while(head != NULL){
+  while(currentNode != NULL){
     size++;
-    currentNode = head->nextNode;
+    currentNode = currentNode->nextNode;
   }
 
   return size;
@@ -43,9 +43,20 @@ struct node* insert_order(struct node* head, char* name, char* artist){
   struct node* currentNode = head;
   struct node* newNode = create_node(name, artist);
   if(currentNode == NULL) return newNode;
-  while(currentNode->nextNode != NULL && strcmp(currentNode->artist, newNode->artist) > 0 && strcmp(currentNode->name, newNode->name) > 0) currentNode = currentNode->nextNode;
+  while(currentNode->nextNode != NULL && strcmp(currentNode->nextNode->artist, newNode->artist) < 0 ) currentNode = currentNode->nextNode;
+  //print_node(currentNode->nextNode);
+  //printf("\n");
+  if(currentNode->nextNode == NULL) {
+    currentNode->nextNode = newNode;
+    return head;
+  }
 
-  if(currentNode->nextNode == NULL) currentNode->nextNode = newNode;
+  while(currentNode->nextNode != NULL && strcmp(currentNode->nextNode->name, newNode->name) <= 0 && strcmp(currentNode->nextNode->artist, newNode->artist) == 0) currentNode = currentNode->nextNode;
+  //print_node(currentNode->nextNode);
+  //printf("\n");
+  if(currentNode->nextNode == NULL) {
+    currentNode->nextNode = newNode;
+  }
   else{
     struct node* nextNode = currentNode->nextNode;
     newNode->nextNode = nextNode;
@@ -73,4 +84,21 @@ struct node* find_node_artist(struct node* head, char* artist){
   }
 
   return NULL;
+}
+
+struct node* find_node_random(struct node* head){
+  srand(time(0));
+  struct node* n = head;
+
+  for(int x = 0; x < rand() % get_size(head); x++){
+    n = n->nextNode;
+  }
+
+  return n;
+}
+
+struct node* remove_node(struct node* head, char* name, char* artist){
+  if(strcmp(head->name, name) == 0 && strcmp(head->artist,artist) == 0) return NULL;
+
+  struct node* currentNode = head;
 }
