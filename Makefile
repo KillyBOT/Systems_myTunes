@@ -18,3 +18,5 @@ node.o: node.c node.h
 	$(CC) -c node.c
 run:
 	./myTunes
+memcheck:
+	valgrind --leak-check=yes ./myTunes

@@ -8,7 +8,6 @@ struct node* create_node(char* name, char* artist){
 }
 
 struct node* insert_front(struct node* head, char* name, char* artist){
-  if(head == NULL) return create_node(name, artist);
   struct node* newNode = create_node(name, artist);
   newNode->nextNode = head;
   return newNode;
@@ -41,19 +40,20 @@ void print_list(struct node* head){
 
 struct node* insert_order(struct node* head, char* name, char* artist){
   struct node* currentNode = head;
+  if(strcmp(currentNode->artist, artist) > 0){
+    return insert_front(head, name, artist);
+  }
+
   struct node* newNode = create_node(name, artist);
   if(currentNode == NULL) return newNode;
+
   while(currentNode->nextNode != NULL && strcmp(currentNode->nextNode->artist, newNode->artist) < 0 ) currentNode = currentNode->nextNode;
-  //print_node(currentNode->nextNode);
-  //printf("\n");
   if(currentNode->nextNode == NULL) {
     currentNode->nextNode = newNode;
     return head;
   }
 
   while(currentNode->nextNode != NULL && strcmp(currentNode->nextNode->name, newNode->name) <= 0 && strcmp(currentNode->nextNode->artist, newNode->artist) == 0) currentNode = currentNode->nextNode;
-  //print_node(currentNode->nextNode);
-  //printf("\n");
   if(currentNode->nextNode == NULL) {
     currentNode->nextNode = newNode;
   }
@@ -98,7 +98,40 @@ struct node* find_node_random(struct node* head){
 }
 
 struct node* remove_node(struct node* head, char* name, char* artist){
-  if(strcmp(head->name, name) == 0 && strcmp(head->artist,artist) == 0) return NULL;
-
+  if(strcmp(head->name, name) == 0 && strcmp(head->artist,artist) == 0) {
+    struct node* nextNode = head->nextNode;
+    free(head);
+    return head->nextNode;
+  }
   struct node* currentNode = head;
+  while(currentNode->nextNode != NULL){
+    if(strcmp(currentNode->nextNode->name, name) == 0 && strcmp(currentNode->nextNode->artist,artist) == 0){
+      struct node* newNext = currentNode->nextNode->nextNode;
+      free(currentNode->nextNode);
+      currentNode->nextNode = newNext;
+      return head;
+    }
+    currentNode = currentNode->nextNode;
+  }
+
+  return head;
+}
+
+struct node* free_nodes(struct node* head){
+  struct node* currentNode = head;
+
+  if(currentNode->nextNode == NULL){
+    free(head);
+    return NULL;
+  }
+
+  struct node* nextNode = head->nextNode;
+  while(nextNode != NULL){
+    free(currentNode);
+    currentNode = nextNode;
+    nextNode = currentNode->nextNode;
+  }
+
+  free(currentNode);
+  return NULL;
 }
