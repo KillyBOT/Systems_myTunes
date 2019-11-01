@@ -2,6 +2,9 @@
 
 int main(){
   struct node* test = NULL;
+
+  struct node** library = create_library();
+
   test = insert_front(test, "b","b");
   printf("TESTING LINKED LIST:\n\n");
 
@@ -53,19 +56,33 @@ int main(){
   print_list(test);
   printf("\n");
 
-  printf("\n\n\n");
+  printf("\n\n");
 
   printf("TESTING MUSIC LIBRARY\n\n");
 
-  struct node** testLibrary = create_library();
+  printf("Testing add_song:\n");
+  library = add_song(library, "n", "f");
+  library = add_song(library, "r", "f");
+  library = add_song(library, "l", "n");
+  library = add_song(library, "bohemian rhapsody", "queen");
+  library = add_song(library, "eye of the spider", "random minecraft youtuber I found");
+  library = add_song(library, "claire de lune", "debussey");
+  library = add_song(library, "1812 overture", "tchaikovsky");
+  library = add_song(library, "staying alive","the beegees");
+  library = add_song(library, "kars4kids","1877");
 
-  printf("Testing add_song for song n by artist f\n");
-  testLibrary = add_song(testLibrary, "n", "f");
   printf("After, testing print_library\n");
-  print_library(testLibrary);
+  print_library(library);
+  printf("\n");
 
+  printf("Testing print_library_letter\n");
+  print_library_letter(library, 'f');
+  printf("\n");
 
-  printf("%d\n", 'a');
+  printf("Testing print_library_artist\n");
+  print_library_artist(library, "the beegees");
+  print_library_artist(library, "the beatles");
+  printf("\n");
 
   return 0;
 }

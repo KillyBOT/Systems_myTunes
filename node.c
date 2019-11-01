@@ -4,6 +4,7 @@ struct node* create_node(char* name, char* artist){
   struct node* newNode = malloc(sizeof(struct node));
   strcpy(newNode->name, name);
   strcpy(newNode->artist, artist);
+  newNode->nextNode = NULL;
   return newNode;
 }
 
@@ -30,22 +31,24 @@ void print_node(struct node* n){
 }
 
 void print_list(struct node* head){
-  struct node* currentNode = head;
-  while(currentNode != NULL){
-    print_node(currentNode);
-    currentNode = currentNode->nextNode;
+  if(head == NULL) print_node(head);
+  else{
+    struct node* currentNode = head;
+    while(currentNode != NULL){
+      print_node(currentNode);
+      currentNode = currentNode->nextNode;
+    }
   }
   printf("\n");
 }
 
 struct node* insert_order(struct node* head, char* name, char* artist){
   struct node* currentNode = head;
-  if(strcmp(currentNode->artist, artist) > 0){
+  if(head == NULL || strcmp(currentNode->artist, artist) > 0){
     return insert_front(head, name, artist);
   }
 
   struct node* newNode = create_node(name, artist);
-  if(currentNode == NULL) return newNode;
 
   while(currentNode->nextNode != NULL && strcmp(currentNode->nextNode->artist, newNode->artist) < 0 ) currentNode = currentNode->nextNode;
   if(currentNode->nextNode == NULL) {
