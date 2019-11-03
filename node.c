@@ -27,7 +27,7 @@ int get_size(struct node* head){
 
 void print_node(struct node* n){
   if(n == NULL) printf("NULL\n");
-  else printf("Song name: [%s] Artist: [%s]\n", n->name, n->artist);
+  else printf("Song name: [%s] | Artist: [%s]\n", n->name, n->artist);
 }
 
 void print_list(struct node* head){
@@ -70,12 +70,14 @@ struct node* insert_order(struct node* head, char* name, char* artist){
 }
 
 struct node* find_node(struct node* head, char* name, char* artist){
+  //printf("Searching for [%s] by [%s]\n",name,artist)
   struct node* currentNode = head;
   while(currentNode != NULL){
     if(strcmp(currentNode->name, name) == 0 && strcmp(currentNode->artist, artist) == 0) return currentNode;
     currentNode = currentNode->nextNode;
   }
 
+  //printf("Song not found!\n");
   return NULL;
 }
 

@@ -75,13 +75,42 @@ int main(){
   print_library(library);
   printf("\n");
 
-  printf("Testing print_library_letter\n");
+  printf("Testing print_library_letter on letter f\n");
   print_library_letter(library, 'f');
   printf("\n");
 
-  printf("Testing print_library_artist\n");
+  printf("Testing print_library_artist on artists [the beegees] and [the beatles]\n");
   print_library_artist(library, "the beegees");
   print_library_artist(library, "the beatles");
+  printf("\n");
+
+  printf("Testing print_library_shuffle for size 4\n");
+  print_library_shuffle(library, 4);
+  printf("\n");
+
+  printf("Testing find_song on song [claire de lune] by [debussey] and [l] by [x]\n");
+  print_node(find_song(library, "claire de lune", "debussey"));
+  print_node(find_song(library, "l", "x"));
+  printf("\n");
+
+  printf("Testing find_artist on artists [random minecraft youtuber I found], [queen], and [tcherepnin]\n");
+  print_list(find_artist(library, "random minecraft youtuber I found"));
+  print_list(find_artist(library, "queen"));
+  print_list(find_artist(library, "tcherepnin"));
+  printf("\n");
+
+  printf("Testing remove_song on song [n] by artist [f] and on song [eye of the spider] by artist [random minecraft youtuber I found]\n");
+  library = remove_song(library, "n", "f");
+  printf("After removing song [n] by artist [f]\n");
+  print_library(library);
+  library = remove_song(library, "eye of the spider", "random minecraft youtuber I found");
+  printf("After removing [eye of the spider] by artist [random minecraft youtuber I found]\n");
+  print_library(library);
+  printf("\n");
+
+  printf("Testing clear_library\n");
+  library = clear_library(library);
+  print_library(library);
   printf("\n");
 
   return 0;
