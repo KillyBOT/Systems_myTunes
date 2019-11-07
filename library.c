@@ -96,5 +96,6 @@ struct node** clear_library(struct node** library){
   for(int x = 0; x < 27; x++){
     if(library[x] != NULL) library[x] = free_nodes(library[x]);
   }
+  free(library);
   return NULL;
 }
